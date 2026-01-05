@@ -540,7 +540,7 @@ This payload is triggered by an internal change of the LoRaWAN or alarm settings
 
 <u><b>Note:</b></u> Configuration uplinks are only valid for devices with FW version 1.1.2 and above. 
 
-### Alarm configuration uplink (depecrated)
+### Alarm configuration uplink (deprecated)
 
 <u><b>Note:</b></u> Alarm configuration format has changed in firmware version 1.2.0+. We strongly recommend to upgrade the devices with the latest firmware, and use the extended alarm configuration <i>(see below)</i> formatting. 
 
@@ -764,6 +764,148 @@ Refer to the alarm dedicated documentation for the data details.
 <li>0x9: 6  hours</li>
 <li>0xA: 12 hours</li>
 </ul>
+
+### Extended alarm configuration uplink
+
+From firmware version 1.3.2 and above. applied in Pressure and Temperature Transmitter. 
+
+The latest alarm can choose for relative alarm or absolute alarm.
+
+<table align="center">
+    <thead>
+    <tr>
+        <th align="center">Byte</th>
+        <th align="center">Name/Value</th>
+        <th align="center">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td align="center"><b>0</b></td>
+        <td>0xFF</td>
+        <td>Configuration message token</td>
+    </tr>
+    <tr>
+        <td align="center"><b>1</b></td>
+        <td>0x07</td>
+        <td>Extended alarm Configuration message token</td>
+    </tr>
+    <tr>
+        <td align="center"><b>2</b></td>
+        <td>Status</td>
+        <td>0 = OK, when triggering configuration downlink was accepted, >0 otherwise</td>
+    </tr>
+    <tr>
+        <td align="center"><b>3-6</b></td>
+        <td>High Alarm Threshold Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>7-10</b></td>
+        <td>High Alarm Hystersis Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>11-14</b></td>
+        <td>Low Alarm Threshold Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>15-18</b></td>
+        <td>Low Alarm Hystersis Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>19</b></td>
+        <td>Parameters</td>
+        <td>
+        Bit0: High alarm threshod active</br>
+        Bit1: Low alarm threshod active</br>
+        Bit2: Variation alarm active</br>
+        Bit3: <i>Reserved</i>
+        Bit7-4: Wakeup period <i>(see below for authorized values)</i>
+        </td>
+    </tr>
+    <tr>
+        <td align="center"><b>20</b></td>
+        <td> Variation alarm value</td>
+        <td>8-bit integer [1:255]</td>
+    </tr>
+    <tr>
+        <td align="center"><b>21</b></td>
+        <td bgcolor="#DDDDDD"><i>Reserved</i></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="center"><b>22</b></td>
+        <td bgcolor="#DDDDDD"><i>Reserved</i></td>
+        <td></td>
+    </tr>
+    <tr><td colspan="3" align="center"><i>And <b>only</b> for the pressure sensor, a second alarm (for the temperature)</i></td></tr>
+    <tr>
+        <td align="center"><b>23-26</b></td>
+        <td>High Alarm Threshold Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>27-30</b></td>
+        <td>High Alarm Hystersis Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>31-34</b></td>
+        <td>Low Alarm Threshold Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>35-38</b></td>
+        <td>Low Alarm Hystersis Value</td>
+        <td>32-bit float LSB</td>
+    </tr>
+    <tr>
+        <td align="center"><b>39</b></td>
+        <td>Parameters</td>
+        <td>
+        Bit0: High alarm threshod active</br>
+        Bit1: Low alarm threshod active</br>
+        Bit2: Variation alarm active</br>
+        Bit3: <i>Reserved</i>
+        Bit7-4: Wakeup period <i>(see below for authorized values)</i>
+        </td>
+    </tr>
+    <tr>
+        <td align="center"><b>40</b></td>
+        <td> Variation alarm value</td>
+        <td>8-bit integer [1:255]</td>
+    </tr>
+    <tr>
+        <td align="center"><b>41</b></td>
+        <td bgcolor="#DDDDDD"><i>Reserved</i></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="center"><b>42</b></td>
+        <td bgcolor="#DDDDDD"><i>Reserved</i></td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
+<u>Allowed alarm wakeup period encodings:</u>
+<ul>
+<li>0x0: 15 seconds</li>
+<li>0x1: 30 seconds</li>
+<li>0x2: 1  minute, default</li>
+<li>0x3: 2  minutes</li>
+<li>0x4: 5  minutes</li>
+<li>0x5: 15 minutes</li>
+<li>0x6: 30 minutes</li>
+<li>0x7: 1  hour</li>
+<li>0x8: 3  hours</li>
+<li>0x9: 6  hours</li>
+<li>0xA: 12 hours</li>
+</ul>
+
 
 ### LoRaWAN configuration uplink
 
